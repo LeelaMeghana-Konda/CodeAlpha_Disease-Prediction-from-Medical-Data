@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthSense | AI Disease Prediction</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav>
+        <div class="logo">
+            <span class="pulse"></span>
+            <h1>HealthSense<span>AI</span></h1>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn active" data-target="home">Dashboard</button>
+            <button class="nav-btn" data-target="heart">Heart Disease</button>
+            <button class="nav-btn" data-target="diabetes">Diabetes</button>
+            <button class="nav-btn" data-target="cancer">Breast Cancer</button>
+        </div>
+    </nav>
+
+    <main id="app-content">
+        <!-- Content will be dynamically loaded here -->
+        <section id="home" class="page-section active">
+            <div class="hero">
+                <h2>Predictive Healthcare at your Fingertips</h2>
+                <p>Advanced machine learning models trained on UCI clinical datasets to provide preliminary diagnostic insights.</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="icon">❤️</span>
+                        <h3>Heart Disease</h3>
+                        <p>Cleveland Dataset</p>
+                        <button onclick="switchTab('heart')" class="action-btn">Scan Now</button>
+                    </div>
+                    <div class="stat-card">
+                        <span class="icon">🩸</span>
+                        <h3>Diabetes</h3>
+                        <p>PIMA Dataset</p>
+                        <button onclick="switchTab('diabetes')" class="action-btn">Scan Now</button>
+                    </div>
+                    <div class="stat-card">
+                        <span class="icon">🎗️</span>
+                        <h3>Breast Cancer</h3>
+                        <p>Wisconsin Dataset</p>
+                        <button onclick="switchTab('cancer')" class="action-btn">Scan Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="heart" class="page-section">
+            <div class="form-container">
+                <header>
+                    <h2>Heart Disease Analysis</h2>
+                    <p>Enter patient vitals and clinical metrics for cardiovascular risk assessment.</p>
+                </header>
+                <form id="heart-form" class="prediction-form">
+                    <div class="form-grid" id="heart-features">
+                        <!-- Dynamic Features -->
+                    </div>
+                    <div class="input-group full-width">
+                        <label for="heart-algorithm">Prediction Algorithm</label>
+                        <select id="heart-algorithm" name="algorithm">
+                            <option value="random_forest">Random Forest Classifier (Balanced)</option>
+                            <option value="logistic_regression">Logistic Regression (Fast)</option>
+                            <option value="svm">Support Vector Machine (Robust)</option>
+                            <option value="xgboost">XGBoost (High Accuracy)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Run Prediction</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="diabetes" class="page-section">
+             <div class="form-container">
+                <header>
+                    <h2>Diabetes Screening</h2>
+                    <p>Screening based on PIMA Indian Heritage dataset metrics.</p>
+                </header>
+                <form id="diabetes-form" class="prediction-form">
+                    <div class="form-grid" id="diabetes-features">
+                        <!-- Dynamic Features -->
+                    </div>
+                    <div class="input-group full-width">
+                        <label for="diabetes-algorithm">Prediction Algorithm</label>
+                        <select id="diabetes-algorithm" name="algorithm">
+                            <option value="random_forest">Random Forest Classifier (Balanced)</option>
+                            <option value="logistic_regression">Logistic Regression (Fast)</option>
+                            <option value="svm">Support Vector Machine (Robust)</option>
+                            <option value="xgboost">XGBoost (High Accuracy)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Run Prediction</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="cancer" class="page-section">
+             <div class="form-container">
+                <header>
+                    <h2>Breast Cancer Screening</h2>
+                    <p>Diagnostic assessment based on cell nucleus features.</p>
+                </header>
+                <form id="cancer-form" class="prediction-form">
+                    <div class="form-grid" id="cancer-features">
+                        <!-- Dynamic Features -->
+                    </div>
+                    <div class="input-group full-width">
+                        <label for="cancer-algorithm">Prediction Algorithm</label>
+                        <select id="cancer-algorithm" name="algorithm">
+                            <option value="random_forest">Random Forest Classifier (Balanced)</option>
+                            <option value="logistic_regression">Logistic Regression (Fast)</option>
+                            <option value="svm">Support Vector Machine (Robust)</option>
+                            <option value="xgboost">XGBoost (High Accuracy)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Run Prediction</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="result-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="result-header">
+                <div class="result-icon pulse" id="res-icon">✓</div>
+                <h2 id="res-title">Analysis Complete</h2>
+            </div>
+            <div class="result-body">
+                <div class="prediction-badge" id="res-badge">RESULT</div>
+                <div class="prob-container">
+                    <p>Probability Score</p>
+                    <div class="progress-bar">
+                        <div id="res-prob-fill" class="progress-fill"></div>
+                    </div>
+                    <span id="res-prob-text">0%</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="predictionChart"></canvas>
+                </div>
+                <p class="disclaimer">Disclaimer: This is an AI-generated analysis for educational purposes. Consult a medical professional for diagnosis.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" class="loader-overlay">
+        <div class="loader"></div>
+        <p>Analyzing Clinical Data...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
